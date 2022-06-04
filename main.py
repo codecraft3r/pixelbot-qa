@@ -65,11 +65,11 @@ async def on_message(message):
         await message.reply("*Searching...*", mention_author=False) # inform user that their request is being processed
         for i in search(message.content[6:] + ' ' + googlefilter, num=1, stop=1): # search google for the query with googlefilter
             url = i # get url from google search
-        request = urllib.request.Request(url, data=None, headers=headers) # create request
-        with urllib.request.urlopen(request) as response: # open request
-            html = response.read() # read response (website data)
-        context = text_from_html(html) # get text from website
-        ans = get_answer(message.content[6:],context) # get answer from AI using website data as context
-        await message.reply(ans + ". \n*From source:* " + url) # reply with answer and url
+        request = urllib.request.Request(url, data=None, headers=headers) # create a request object from the url
+        with urllib.request.urlopen(request) as response: # open the url
+            html = response.read() # read the response
+        ai_context = text_from_html(html) 
+        ai_answer = get_answer(message.content[6:],ai_context) # get answer from AI using website data as context
+        await message.reply(ai_answer + ". \n*From source:* " + url) # reply with answer and url
 
 client.run(os.getenv('DISCORD_TOKEN'))
