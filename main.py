@@ -63,7 +63,7 @@ async def on_message(message):
     # !wiki command
     if(message.content.startswith('!wiki')):
         await message.reply("*Searching...*", mention_author=False) # inform user that their request is being processed
-        for i in search(message.content[6:] + ' ' + googlefilter, num=1, stop=1): # search google for the query
+        for i in search(message.content[6:] + ' ' + googlefilter, num=1, stop=1): # search google for the query with googlefilter
             url = i # get url from google search
         request = urllib.request.Request(url, data=None, headers=headers) # create request
         with urllib.request.urlopen(request) as response: # open request
